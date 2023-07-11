@@ -1,52 +1,66 @@
 section {
-    height: 100vh;
-    background-color: #eee;
-    display: grid;
-    place-items: center;
-  }
-  .card {
-    width: 500px;
-    background-color: #fafafa;
-    border-radius: 8px;
-    padding: 30px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-  }
-  
-  form {
-    padding-block: 20px;
-    font-size: 1.1rem
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+  height: 100vh;
+  background-color: #eee;
+  display: grid;
+  place-items: center;
+}
+.card {
+  width: 500px;
+  background-color: #fafafa;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
 
-  .offscreen, .hide {
-    display: none;
-  }
+form {
+  padding-block: 20px;
+  font-size: 1.1rem;
+}
 
-  input {
-    padding: 8px;
-    font-size: inherit;
-  }
-  span {
-    font-size: .9rem;
-    padding-inline: .2rem;
-  }
-  small {
-    color: #727272;
-  }
-  small svg {
-    margin-right: .5rem;
-  }
+.form-group {
+  margin-block: 16px;
+}
 
-  .invalid, .err-msg {
-    color: red;
-  }
-  .valid {
-    color: green;
-  }
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  
+.offscreen,
+.hide {
+  display: none;
+}
+
+input {
+  padding: 8px;
+  font-size: inherit;
+}
+span {
+  font-size: 0.9rem;
+  margin-inline: 0.4rem;
+}
+
+small {
+  color: #727272;
+}
+small svg {
+  margin-right: 0.5rem;
+}
+
+.invalid,
+.err-msg {
+  color: rgb(179, 0, 0);
+}
+.valid {
+  color: rgb(0, 85, 0);
+}
+
+button {
+  width: 100%;
+  padding-block: 8px;
+}
+
+.info {
+  text-align: center;
+}

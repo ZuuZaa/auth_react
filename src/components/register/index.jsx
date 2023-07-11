@@ -33,28 +33,44 @@ export const RegisterForm = () => {
 
     useEffect(() => {
         const result = USER_REGEX.test(user)
-        console.log(result, user)
         setValidName(result)
     }, [user])
 
     useEffect(() => {
-        const result = PWD_REGEX.test(pwd)
-        console.log(result, pwd)
+        const result = PWD_REGEX.test(pwd);
         setValidPwd(result)
-        const match = pwd === matchPwd;
-        setValidMatch(match)
+        if (result) {
+            const match = pwd === matchPwd;
+            setValidMatch(match)
+        }
+
     }, [pwd, matchPwd])
 
     useEffect(() => {
         setErrorMsg("");
     }, [user, pwd, matchPwd])
 
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("submitted", user, pwd)
+        const userValue = USER_REGEX.test(user);
+        const pwdValue = PWD_REGEX.test(pwd);
+        if (!userValue || !pwdValue) {
+            setErrorMsg("Invalid value")
+            return
+        }
+        setSuccess(true)
+    }
     return (
         <section>
+        {success 
+        ? <p>Congrats!</p> 
+        : (
             <div className="card">
                 <p ref={errRef} className={errorMsg ? "err-msg" : "offscreen"} aria-live="assertive">{errorMsg}</p>
                 <h1>Register</h1>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="username">
                             Username:
@@ -79,14 +95,81 @@ export const RegisterForm = () => {
                         />
                         <small id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
-                             4 to 24 characters. <br />
+                            4 to 24 characters. <br />
                             Must begin with a letter. <br />
                             Letters, numbers,underscores, hyphens allowed.
                         </small>
 
                     </div>
+                    <div className="form-group">
+                        <label htmlFor="password">
+                            Password:
+                            <span className={validPwd ? "valid" : "hide"}>
+                                <FontAwesomeIcon icon={faCheck} />
+                            </span>
+                            <span className={validPwd || !pwd ? "hide" : "invalid"}>
+                                <FontAwesomeIcon icon={faTimes} />
+                            </span>
+                        </label>
+                        <input
+                            type="password"
+                            id="password"
+                            autoComplete="off"
+                            onChange={(e) => setPwd(e.target.value)}
+                            required
+                            aria-invalid={validPwd ? "false" : "true"}
+                            aria-describedby="pwdnote"
+                            onFocus={() => setPwdFocus(true)}
+                            onBlur={() => setPwdFocus(false)}
+                        />
+                        <small id="pwdnote" className={pwdFocus && pwd && !validPwd ? "instructions" : "offscreen"}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            8 to 24 characters. <br />
+                            Must include uppercase and lowercase letters, a number and special characters. <br />
+                            Allowed spesial characters:
+                            <span aria-label="exclamation mark">!</span>
+                            <span aria-label="at symbol">@</span>
+                            <span aria-label="hashtag">#</span>
+                            <span aria-label="dollar sign">$</span>
+                            <span aria-label="persent">%</span>
+                        </small>
+
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="pwd-confirm">
+                            Password confirm:
+                            <span className={validMatch ? "valid" : "hide"}>
+                                <FontAwesomeIcon icon={faCheck} />
+                            </span>
+                            <span className={validMatch || !matchPwd  ? "hide" : "invalid"}>
+                                <FontAwesomeIcon icon={faTimes} />
+                            </span>
+                        </label>
+                        <input
+                            type="password"
+                            id="pwd-confirm"
+                            autoComplete="off"
+                            onChange={(e) => setMatchPwd(e.target.value)}
+                            required
+                            aria-invalid={validMatch ? "false" : "true"}
+                            aria-describedby="confirmnote"
+                            onFocus={() => setMatchFocus(true)}
+                            onBlur={() => setMatchFocus(false)}
+                        />
+                        <small id="pwdnote" className={matchFocus && matchPwd && !validMatch ? "instructions" : "offscreen"}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            Must Mact with the first password input value.
+
+                        </small>
+                    </div>
+                    <button type="submit" disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
                 </form>
+                <p className="info">
+                    Already have an account? <a href="/">Sign In</a>
+                </p>
             </div>
+        
+        )}
         </section>
     )
 }
